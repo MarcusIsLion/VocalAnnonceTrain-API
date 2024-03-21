@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossorigin="anonymous"
+        />
+        <title>Exemple d'utilisation de l'API</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 0;
+                background-color: #f7f7f7;
+                color: #333;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 26px 28px rgba(0, 0, 0, 0.48);
+            }
+
+            h1,
+            h2 {
+                color: #007bff;
+            }
+
+            a {
+                color: #007bff;
+                word-wrap: break-word; /* Permet de couper les longs liens */
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+            ul {
+                list-style-type: disc;
+                padding-left: 20px;
+            }
+
+            audio {
+                margin-top: 20px;
+                width: 100%;
+            }
+
+            /* Style de base pour les onglets */
+            .tabs {
+                display: flex;
+                flex-wrap: wrap; /* Permet aux onglets de passer à la ligne sur les petits écrans */
+                justify-content: space-between; /* Les onglets sont répartis sur plusieurs lignes avec un espacement entre eux */
+                margin-bottom: 20px;
+            }
+
+            /* Style des liens des onglets */
+            .tablink {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                border: 1px solid #007bff;
+                transition: 0.3s;
+                margin-bottom: 10px; /* Ajoute un espace entre chaque onglet */
+                min-width: 100px; /* Définit une largeur minimale pour les onglets */
+            }
+
+            /* Style des liens des onglets au survol */
+            .tablink:hover {
+                background-color: #0056b3;
+            }
+
+            /* Style des liens des onglets actifs */
+            .tablink.active {
+                background-color: #aed5ff;
+                color: #0056b3;
+                border: 1px solid #0056b3;
+            }
+
+            .tabscontent {
+                display: none;
+                transition: 1s;
+            }
+
+            .tabscontent.active {
+                display: block;
+            }
+
+            hr {
+                border: none;
+                height: 4px;
+                background-color: #0056b3;
+                margin: 20px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>VocalAnnonceTrain API</h1>
+            <p>
+                Grâce à cette API, vous allez pouvoir réaliser des annonces de
+                train personnalisées pour simuler une voie en gare ou dans un
+                train.
+                Pas de fichier audio à télécharger, tous se fait sans prendre de place sur votre machine !
+            </p>
+            <p class="Creator">Cette API à été développé par <a href="https://github.com/MarcusIsLion" target="_blank">MarcusIsLion</a> et aidé par
+                <a href="https://github.com/romainZer" target="_blank">romainZer</a></p>
+            <div class="tabs">
+                <button class="tablink active" onclick="openTab(event, 'DepartTrain')">
+                    Départ d'un train
+                </button>
+                <button
+                    class="tablink"
+                    onclick="openTab(event, 'PassingTrain')"
+                >
+                    Passage d'un train
+                </button>
+                <button class="tablink" onclick="openTab(event, 'DeleteTrain')">
+                    Suppression d'un train
+                </button>
+                <button class="tablink" onclick="openTab(event, 'AlarmTrain')">
+                    Alarme dans un train
+                </button>
+                <button class="tablink" onclick="openTab(event, 'Greve')">
+                    Grève
+                </button>
+                <button class="tablink" onclick="openTab(event, 'DynamicDisplayOff')">
+                    Panneaux d'affichages dynamic en panne
+                </button>
+                <button class="tablink" onclick="openTab(event, 'GenerateLink')">
+                    Générer mon propre lien
+                </button>
+            </div>
+            <div id="DepartTrain" class="tabcontent">
+                <hr />
+                <h2>Départ d'un train</h2>
+                <p>
+                    Dans cet exemple, vous allez découvrir comment utiliser
+                    l'API pour obtenir un message vocal pour le départ d'un
+                    train.
+                </p>
+                <p>
+                    Pour commencer, le fonctionnement de l'API correspond à un
+                    site web. Pour obtenir une annonce vocale, vous devez
+                    effectuer une requête internet comme suit :
+                </p>
+                <a href="https://www.VocalAnnonceTrain.api/"
+                    >https://www.VocalAnnonceTrain.api/</a
+                >
+                <p>
+                    Cette adresse vous redirige ici, car elle est considérée
+                    comme la page d'accueil de l'API.
+                </p>
+                <p>
+                    Toutefois, vous pouvez appeler d'autres pages comme
+                    "TrainDeparture".
+                </p>
+                <a
+                    target="_blanl"
+                    href="https://www.VocalAnnonceTrain.api/TrainDeparture"
+                    >https://www.VocalAnnonceTrain.api/TrainDeparture</a
+                >
+                <p>
+                    Attention tout de même, en appelant cette page, vous devez
+                    lui transmettre 8 paramètres :
+                </p>
+                <ul>
+                    <li>Le type du train (TGV, TER, INTERCITE)(1 type max)</li>
+                    <li>
+                        Le numéro du train (XXXX, numéro à 4 chiffre maximum)
+                    </li>
+                    <li>
+                        Le type de voie (V [= Voie], Q [= Quai], P [=
+                        Plateforme])(1 type max)
+                    </li>
+                    <li>
+                        L'indicateur de la plateforme ([A, B, C, ..., Z]/[1, 2,
+                        3, ...,26])(1 indicateur max)
+                    </li>
+                    <li>La station d'arrivée</li>
+                    <li>L'heure de départ (00, 01, 02, ..., 23)</li>
+                    <li>Les minutes de départ (00, 01, 02, ..., 59)</li>
+                    <li>
+                        Le type du jingle (Station, IBTGV [ = In Bord TGV],
+                        IBTER [ = In Bord TER])(1 type max)
+                    </li>
+                </ul>
+                <p>Voici donc un exemple de requête :</p>
+                <a
+                    target="_blanlk"
+                    href="http://127.0.0.1:5000/TrainDeparture?train_name=TGV&train_number=234&plateform_type=Q&plateform_indicator=H&arrival_station=Marseille&departure_Hours=10&departure_Minutes=30&TypeJingle=Station"
+                    >http://127.0.0.1:5000/TrainDeparture?train_name=TGV&train_number=234&plateform_type=Q&plateform_indicator=H&arrival_station=Marseille&departure_Hours=10&departure_Minutes=30&TypeJingle=Station</a
+                >
+                <p>Résultat :</p>
+                <audio controls>
+                    <source
+                        src="http://127.0.0.1:5000/TrainDeparture?train_name=TGV&train_number=234&plateform_type=Q&plateform_indicator=H&arrival_station=Marseille&departure_Hours=10&departure_Minutes=30&TypeJingle=Station"
+                        type="audio/mpeg"
+                    />
+                    Votre navigateur ne supporte pas l'élément audio.
+                </audio>
+            </div>
+            <div id="PassingTrain" class="tabcontent" style="display: none;">
+                <hr />
+                <h2>Passage d'un train</h2>
+                <p>
+                    Dans cet exemple, vous allez découvrir comment utiliser
+                    l'API pour obtenir des informations sur le passage d'un
+                    train.
+                </p>
+                <p>
+                    Pour cela, vous pouvez appeler la page "PassingTrain" en
+                    spécifiant les paramètres suivants :
+                </p>
+                <ul>
+                    <li>
+                        Le type de voie (V [= Voie], Q [= Quai], P [=
+                        Plateforme])(1 type max)
+                    </li>
+                    <li>
+                        L'indicateur de la voie ([A, B, C, ...,Z]/[1, 2, 3, ...
+                        26)(1 indicateur max)
+                    </li>
+                </ul>
+                <p>Voici un exemple de requête :</p>
+                <a
+                    target="_blank"
+                    href="http://127.0.0.1:5000/PassingTrain?Sidding_type=V&Sidding_indicator=A"
+                    >http://127.0.0.1:5000/PassingTrain?Sidding_type=voie_principale&Sidding_indicator=A</a
+                >
+                <p>Résultat :</p>
+                <audio controls>
+                    <source
+                        src="http://127.0.0.1:5000/PassingTrain?Sidding_type=V&Sidding_indicator=A"
+                        type="audio/mpeg"
+                    />
+                    Votre navigateur ne supporte pas l'élément audio.
+                </audio>
+            </div>
+            <div id="DeleteTrain" class="tabcontent" style="display: none;">
+                <hr />
+                <h2>Suppression d'un train</h2>
+                <p>
+                    Dans cet exemple, vous allez découvrir comment utiliser
+                    l'API pour supprimer un train.
+                </p>
+                <p>
+                    Pour cela, vous pouvez appeler la page "DeleteTrain" en
+                    spécifiant les paramètres suivants :
+                </p>
+                <ul>
+                    <li>Le type du train</li>
+                    <li>Le numéro du train</li>
+                    <li>La destination du train</li>
+                    <li>L'heure de départ (heures et minutes)</li>
+                </ul>
+                <p>Voici un exemple de requête :</p>
+                <a
+                    target="_blank"
+                    href="http://127.0.0.1:5000/DeleteTrain?train_name=TGV&train_number=234&train_destination=Marseille&departure_Hours=10&departure_Minutes=30"
+                    >http://127.0.0.1:5000/DeleteTrain?train_name=TGV&train_number=234&train_destination=Marseille&departure_Hours=10&departure_Minutes=30</a
+                >
+                <p>Résultat :</p>
+                <audio controls>
+                    <source
+                        src="http://127.0.0.1:5000/DeleteTrain?train_name=TGV&train_number=234&train_destination=Marseille&departure_Hours=10&departure_Minutes=30"
+                        type="audio/mpeg"
+                    />
+                    Votre navigateur ne supporte pas l'élément audio.
+                </audio>
+            </div>
+            <div id="AlarmTrain" class="tabcontent" style="display: none;">
+                <hr />
+                <h2>Alarme dans un train</h2>
+                <p>
+                    Dans cet exemple, vous allez découvrir comment utiliser
+                    l'API pour une alarme dans un train.
+                </p>
+                <p>
+                    Pour cela, vous pouvez appeler la page "AlarmInBord" en
+                    spécifiant le paramètre suivant :
+                </p>
+                <ul>
+                    <li>Le type du train</li>
+                </ul>
+                <p>Voici un exemple de requête :</p>
+                <a
+                    target="_blank"
+                    href="http://127.0.0.1:5000/AlarmInBord?train_name=TGV"
+                    >http://127.0.0.1:5000/AlarmInBord?train_name=TGV</a
+                >
+                <p>Résultat :</p>
+                <audio controls>
+                    <source
+                        src="http://127.0.0.1:5000/AlarmInBord?train_name=TGV"
+                        type="audio/mpeg"
+                    />
+                    Votre navigateur ne supporte pas l'élément audio.
+                </audio>
+            </div>
+            <div id="Greve" class="tabcontent" style="display: none;">
+                <hr />
+                <h2>Grève</h2>
+                <p>
+                    Dans cet exemple, vous allez découvrir comment utiliser
+                    l'API pour une grève.
+                </p>
+                <p>
+                    Pour cela, vous pouvez appeler la page "Strike"
+                </p>
+                <p>Voici un exemple de requête :</p>
+                <a
+                    target="_blank"
+                    href="http://127.0.0.1:5000/Strike"
+                    >http://127.0.0.1:5000/Strike</a
+                >
+                <p>Résultat :</p>
+                <audio controls>
+                    <source
+                        src="http://127.0.0.1:5000/Strike"
+                        type="audio/mpeg"
+                    />
+                    Votre navigateur ne supporte pas l'élément audio.
+                </audio>
+            </div>
+
+            <div id="DynamicDisplayOff" class="tabcontent" style="display: none;">
+                <hr />
+                <h2>Panneaux d'affichages dynamic en panne</h2>
+                <p>
+                    Dans cet exemple, vous allez découvrir comment utiliser
+                    l'API pour des panneaux d'affichages dynamic en panne.
+                </p>
+                <p>
+                    Pour cela, vous pouvez appeler la page "DynamicDisplayOff"
+                </p>
+                <p>Voici un exemple de requête :</p>
+                <a
+                    target="_blank"
+                    href="http://127.0.0.1:5000/DynamicDisplayOff"
+                    >http://127.0.0.1:5000/DynamicDisplayOff</a
+                >
+                <p>Résultat :</p>
+                <audio controls>
+                    <source
+                        src="http://127.0.0.1:5000/DynamicDisplayOff"
+                        type="audio/mpeg"
+                    />
+                    Votre navigateur ne supporte pas l'élément audio.
+                </audio>
+            </div>
+            <div id="GenerateLink" class="tabcontent" style="display: none;">
+                <hr />
+                <h2>Générer un lien personnalisé</h2>
+                <form id="parametresTrain">
+                    <label for="typeTrain">Type de train :</label>
+                    <select id="typeTrain" name="typeTrain">
+                        <option value="TGV">TGV</option>
+                        <option value="TER">TER</option>
+                        <option value="INTERCITE">INTERCITE</option>
+                    </select><br><br>
+
+                    <label for="numeroTrain">Numéro du train :</label>
+                    <input type="text" id="numeroTrain" name="numeroTrain" maxlength="4"><br><br>
+
+                    <label for="typeVoie">Type de voie :</label>
+                    <select id="typeVoie" name="typeVoie">
+                        <option value="V">Voie</option>
+                        <option value="Q">Quai</option>
+                        <option value="P">Plateforme</option>
+                    </select><br><br>
+
+                    <label for="indicateurPlateforme">Indicateur de la plateforme :</label>
+                    <input type="text" id="indicateurPlateforme" name="indicateurPlateforme" maxlength="1"><br><br>
+
+                    <label for="stationArrivee">Station d'arrivée :</label>
+                    <input type="text" id="stationArrivee" name="stationArrivee"><br><br>
+
+                    <label for="heureDepart">Heure de départ :</label>
+                    <input type="number" id="heureDepart" name="heureDepart" min="0" max="23"><br><br>
+
+                    <label for="minutesDepart">Minutes de départ :</label>
+                    <input type="number" id="minutesDepart" name="minutesDepart" min="0" max="59"><br><br>
+
+                    <label for="typeJingle">Type de jingle :</label>
+                    <select id="typeJingle" name="typeJingle">
+                        <option value="Station">Station</option>
+                        <option value="IBTGV">In Bord TGV</option>
+                        <option value="IBTER">In Bord TER</option>
+                    </select><br><br>
+
+                    <button type="button" onclick="genererLien()">Générer le lien</button>
+                </form>
+
+                <p id="lienGenere">Le lien sera généré ici.</p>
+            </div>
+        </div>
+
+        <script>
+            function genererLien() {
+                        var typeTrain = document.getElementById("typeTrain").value;
+                        var numeroTrain = document.getElementById("numeroTrain").value;
+                        var typeVoie = document.getElementById("typeVoie").value;
+                        var indicateurPlateforme = document.getElementById("indicateurPlateforme").value;
+                        var stationArrivee = document.getElementById("stationArrivee").value;
+                        var heureDepart = document.getElementById("heureDepart").value;
+                        var minutesDepart = document.getElementById("minutesDepart").value;
+                        var typeJingle = document.getElementById("typeJingle").value;
+
+                        var lien = "http://127.0.0.1:5000/TrainDeparture?train_name=" + typeTrain +
+                                   "&train_number=" + numeroTrain +
+                                   "&plateform_type=" + typeVoie +
+                                   "&plateform_indicator=" + indicateurPlateforme +
+                                   "&arrival_station=" + stationArrivee +
+                                   "&departure_Hours=" + heureDepart +
+                                   "&departure_Minutes=" + minutesDepart +
+                                   "&TypeJingle=" + typeJingle;
+
+                        document.getElementById("lienGenere").innerHTML = "<a target='_blank' href='" + lien + "'>" + lien + "</a>";
+                    }
+        </script>
+        <script>
+            function openTab(evt, tabName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablink");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(
+                        " active",
+                        ""
+                    );
+                }
+                document.getElementById(tabName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
+    </body>
+</html>
